@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Blockview — Bedrock World Viewer</title>
+<style>
+:root{color-scheme:dark}*{box-sizing:border-box}body{margin:0;background:#0d1219;color:#e9f0f6;font:14px system-ui}
+header{height:58px;padding:0 18px;display:flex;align-items:center;gap:14px;background:#151e29;border-bottom:1px solid #2b3949}
+h1{font-size:19px;margin:0}.tag{font-size:12px;color:#9fb0c2}
+main{height:calc(100vh - 58px);display:grid;grid-template-columns:290px 1fr}
+aside{padding:16px;background:#131b25;border-right:1px solid #2b3949;overflow:auto}
+section{margin-bottom:18px}h2{font-size:14px;margin:0 0 9px;color:#cbd7e2}
+p{line-height:1.45}.muted{color:#9aabba;font-size:12px}
+button,select,input{background:#202d3b;color:#eef4f8;border:1px solid #3b4d60;border-radius:8px;padding:9px}
+button{cursor:pointer;font-weight:650}button.primary{background:#79d6a2;color:#102019;border:0}
+button:disabled{opacity:.55;cursor:wait}input[type=file]{width:100%;font-size:12px}
+.row{display:flex;gap:7px;align-items:center;flex-wrap:wrap}select{width:100%}
+#viewport{position:relative;min-width:0;background:#0a0f15;overflow:hidden}#viewport canvas{display:block}
+#status{white-space:pre-wrap;color:#9fb0c2;font-size:12px;margin-top:9px}
+#share{word-break:break-all;color:#8fe1b1;font-size:12px}
+#hud{position:absolute;top:12px;left:12px;pointer-events:none;background:#101923cc;border:1px solid #314052;border-radius:8px;padding:8px 10px;font-size:12px;color:#dce6ef}
+#inspect{position:absolute;right:12px;bottom:12px;max-width:270px;pointer-events:none;background:#101923e8;border:1px solid #314052;border-radius:8px;padding:10px;font-size:12px;display:none}
+#loading{position:absolute;inset:0;display:grid;place-items:center;background:#0a0f15cc;color:#dce6ef;font-size:14px}
+@media(max-width:720px){main{grid-template-columns:1fr;grid-template-rows:auto 1fr;height:calc(100vh - 58px)}aside{max-height:34vh;border-right:0;border-bottom:1px solid #2b3949}#viewport{min-height:0}}
+</style></head><body>
+<header><h1>Blockview</h1><span class="tag">Bedrock world explorer · v0.3</span></header>
+<main>
+<aside>
+<section id="uploadPanel">
+<h2>Open a Bedrock world</h2>
+<p class="muted">Upload a .mcworld export. The server reads the LevelDB subchunks and turns them into individual 3D blocks.</p>
+<input id="file" type="file" accept=".mcworld">
+<div class="row" style="margin-top:9px"><button class="primary" id="upload">Upload & index</button></div>
+<p class="muted">250 MB upload limit. Upload only worlds you have permission to share.</p>
+</section>
+<section id="worldPanel" hidden>
+<h2 id="worldName">World</h2>
+<label class="muted" for="dimension">Dimension</label>
+<select id="dimension"></select>
+<p class="muted" id="worldStats"></p>
+<h2>Navigation</h2>
+<p class="muted">Drag to orbit · scroll to zoom · right-drag to pan. WASD moves the camera. Click a block to inspect it.</p>
+<div class="row"><button id="home">Reset camera</button><button id="nearby">Load nearby</button></div>
+<h2 style="margin-top:16px">Share</h2><p id="share"></p>
+</section>
+<p id="status">Choose a .mcworld file to begin.</p>
+</aside>
+<div id="viewport">
+<div id="hud">No world loaded</div>
+<div id="inspect"></div>
+<div id="loading" hidden>Loading chunks…</div>
+</div>
+</main>
+<script type="module" src="/app.js"></script>
+</body></html>
