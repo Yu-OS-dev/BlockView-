@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: blockview
+    runtime: node
+    plan: starter
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /health
+    disk:
+      name: blockview-worlds
+      mountPath: /var/data
+      sizeGB: 10
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: WORLD_STORAGE
+        value: /var/data/worlds
